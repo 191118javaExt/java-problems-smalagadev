@@ -31,7 +31,7 @@ public class EvaluationService {
 	 * @param phrase
 	 * @return
 	 */
-	public String acronym(String phrase) { //NOT COMPLETE
+	public String acronym(String phrase) {
 		String acronym = "";
 		
 		String[] words = phrase.split(" |-");
@@ -129,8 +129,62 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		int score = 0;
+		
+		for(int i = 0; i < string.length(); i++) {
+			switch(string.charAt(i)) {
+				case 'A':
+				case 'E':
+				case 'I':
+				case 'O':
+				case 'U':
+				case 'L':
+				case 'N':
+				case 'R':
+				case 'S':
+				case 'T':
+					score += 1;
+					break;
+					
+				case 'D':
+				case 'G':
+					score += 2;
+					break;
+					
+				case 'B':
+				case 'C':
+				case 'M':
+				case 'P':
+					score += 3;
+					break;
+					
+				case 'F':
+				case 'H':
+				case 'V':
+				case 'W':
+				case 'Y':
+					score += 4;
+					break;
+					
+				case 'K':
+					score += 5;
+					break;
+					
+				case 'J':
+				case 'X':
+					score += 5;
+					break;
+					
+				case 'Q':
+				case 'Z':
+					score += 10;
+					break;
+			default:
+//				score += 0;
+					
+			}
+		}
+		return score;
 	}
 
 	/**
@@ -165,8 +219,30 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		String phoneNumber = "";
+		// Strip non numerical characters
+		System.out.println(string);
+		for(int i = 0; i < string.length(); i++) {
+			if(string.charAt(i) == '0' || string.charAt(i) == '1' || string.charAt(i) == '2' || 
+					string.charAt(i) == '3' || string.charAt(i) == '4' || string.charAt(i) == '5' || 
+					string.charAt(i) == '6' || string.charAt(i) == '7' || string.charAt(i) == '8' || 
+					string.charAt(i) == '9') {
+				phoneNumber += string.charAt(i);
+			}
+		}
+		
+		// Check for country code and remove it
+		if(phoneNumber.length() == 11 && phoneNumber.charAt(0) == 1) {
+			phoneNumber = phoneNumber.substring(1);
+		}
+		
+		// Check if phoneNumber is valid length
+		if(phoneNumber.length() == 10) {
+			return phoneNumber;
+		}
+		else {
+			System.out.println("Not a valid NANP phone number.");
+		}
 	}
 
 	/**
@@ -179,7 +255,9 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
+//		String[] words = string.split(" ");
+//		
+//		System.out.print(words[0]);
 		return null;
 	}
 
@@ -259,7 +337,35 @@ public class EvaluationService {
 	 * @return
 	 */
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
+		// Create returning result and list of words
+		String result = "";
+		String[] words = string.split(" "); // Split string word by word
+		
+		// Loop through each word
+		for(int i = 0; i < words.length; i++) {
+			// Transform each word
+				// Vowel case
+				if(words[i].charAt(0) == 'a' || words[i].charAt(0) == 'e' || words[i].charAt(0) == 'i'
+						 || words[i].charAt(0) == 'o' || words[i].charAt(0) == 'u'){
+					// Add Transformed word to result
+					result += words[i] + "ay";
+					
+				}
+				if(words[i].charAt(0) == 'b' || words[i].charAt(0) == 'c' || words[i].charAt(0) == 'd'
+						 || words[i].charAt(0) == 'f' || words[i].charAt(0) == 'g' || words[i].charAt(0) == 'h'
+						 || words[i].charAt(0) == 'j' || words[i].charAt(0) == 'k' || words[i].charAt(0) == 'l'
+						 || words[i].charAt(0) == 'm' || words[i].charAt(0) == 'n' || words[i].charAt(0) == 'p'
+						 || words[i].charAt(0) == 'q' || words[i].charAt(0) == 'r' || words[i].charAt(0) == 's'
+						 || words[i].charAt(0) == 't' || words[i].charAt(0) == 'v' || words[i].charAt(0) == 'w'
+						 || words[i].charAt(0) == 'x' || words[i].charAt(0) == 'y' || words[i].charAt(0) == 'z') {
+					// Consonant case
+					// Add Transformed word to result
+				 result += words[i].substring(1) + words[i].charAt(0)+ "ay ";
+				}				
+		}
+		System.out.println(result);	
+		
+		
 		return null;
 	}
 
@@ -446,8 +552,24 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		char[] alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+		                   'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+		                   'y','z'};
+		
+		//Use .contains method for string
+		
+		// Loop through each letter of the alphabet
+//		for(int i = 0; i < alphabet.length; i++) {
+//			boolean matched = true;
+			
+			// Loop each letter of the alphabet, through each letter of the string
+//			for(int j = 0; matched || j < string.length(); j++) {
+//				System.out.println(string.charAt(j));
+//			}
+//			System.out.println(alphabet[i]);
+//		}
+		
+		return true;
 	}
 
 	/**
@@ -550,7 +672,51 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
+		int index = 0;
+		int operand1, operand2;
+		String wordProblem;
+		String operator = "";
+		String[] brokenUpProblem;
+		
+		// Identify index of first operator
+		while(string.charAt(index) != '-' && string.charAt(index) != '0' && string.charAt(index) != '1'
+				&& string.charAt(index) != '2' && string.charAt(index) != '3' && string.charAt(index) != '4'
+				&& string.charAt(index) != '5' && string.charAt(index) != '6' && string.charAt(index) != '7'
+				&& string.charAt(index) != '8' && string.charAt(index) != '9') {
+			index++;
+		}
+		
+		// Find and discard question mark if it exist
+		if(string.charAt(string.length() - 1) == '?') {
+			wordProblem = string.substring(index, string.length() - 2);
+		}
+		wordProblem = string.substring(index, string.length() - 1);
+		
+		// Split word problem and assign operands and operator
+		brokenUpProblem = wordProblem.split(" ");
+		
+		operand1 = Integer.parseInt(brokenUpProblem[0]);
+		operand2 = Integer.parseInt(brokenUpProblem[brokenUpProblem.length - 1]);
+		
+		for(int i = 0; i < brokenUpProblem.length;i++) {
+			if(brokenUpProblem[i].equals("minus") || brokenUpProblem[i].equals("plus")
+					|| brokenUpProblem[i].equals("multiplied") || brokenUpProblem[i].equals("divided")) {
+				operator = brokenUpProblem[i];
+			}
+		}
+		
+		// Perform operations
+		
+		switch(operator) {
+		case "minus":
+			return operand1 - operand2;
+		case "plus":
+			return operand1 + operand2;
+		case "multiplied":
+			return operand1 * operand2;
+		case "divided":
+			return operand1 / operand2;
+		}
 		return 0;
 	}
 
