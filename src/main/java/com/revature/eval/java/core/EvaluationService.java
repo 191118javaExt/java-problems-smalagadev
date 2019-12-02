@@ -131,56 +131,56 @@ public class EvaluationService {
 	public int getScrabbleScore(String string) {
 		int score = 0;
 		
-		for(int i = 0; i < string.length(); i++) {
+		for(int i = 0; i < string.length(); i++) { //testALongMixCaseWord() not passed
 			switch(string.charAt(i)) {
-				case 'A':
-				case 'E':
-				case 'I':
-				case 'O':
-				case 'U':
-				case 'L':
-				case 'N':
-				case 'R':
-				case 'S':
-				case 'T':
+				case 'A': case 'a':
+				case 'E': case 'e':
+				case 'I': case 'i':
+				case 'O': case 'o':
+				case 'U': case 'u':
+				case 'L': case 'l':
+				case 'N': case 'n':
+				case 'R': case 'r':
+				case 'S': case 's':
+				case 'T': case 't':
 					score += 1;
 					break;
 					
-				case 'D':
-				case 'G':
+				case 'D': case 'd':
+				case 'G': case 'g':
 					score += 2;
 					break;
 					
-				case 'B':
-				case 'C':
-				case 'M':
-				case 'P':
+				case 'B': case 'b':
+				case 'C': case 'c':
+				case 'M': case 'm':
+				case 'P': case 'p':
 					score += 3;
 					break;
 					
-				case 'F':
-				case 'H':
-				case 'V':
-				case 'W':
-				case 'Y':
+				case 'F': case 'f':
+				case 'H': case 'h':
+				case 'V': case 'v':
+				case 'W': case 'w':
+				case 'Y': case 'y':
 					score += 4;
 					break;
 					
-				case 'K':
+				case 'K': case 'k':
 					score += 5;
 					break;
 					
-				case 'J':
-				case 'X':
+				case 'J': case 'j':
+				case 'X': case 'x':
 					score += 5;
 					break;
 					
-				case 'Q':
-				case 'Z':
+				case 'Q': case 'q':
+				case 'Z': case 'z':
 					score += 10;
 					break;
 			default:
-//				score += 0;
+				score += 0;
 					
 			}
 		}
@@ -218,10 +218,9 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String string) {
+	public String cleanPhoneNumber(String string) {// invalidwithnonnumeric & invalidWhenMoreThan11Digits will be skipped
 		String phoneNumber = "";
 		// Strip non numerical characters
-		System.out.println(string);
 		for(int i = 0; i < string.length(); i++) {
 			if(string.charAt(i) == '0' || string.charAt(i) == '1' || string.charAt(i) == '2' || 
 					string.charAt(i) == '3' || string.charAt(i) == '4' || string.charAt(i) == '5' || 
@@ -236,13 +235,7 @@ public class EvaluationService {
 			phoneNumber = phoneNumber.substring(1);
 		}
 		
-		// Check if phoneNumber is valid length
-		if(phoneNumber.length() == 10) {
-			return phoneNumber;
-		}
-		else {
-			System.out.println("Not a valid NANP phone number.");
-		}
+		return phoneNumber;
 	}
 
 	/**
@@ -296,7 +289,7 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T> { // Skip this question
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
@@ -343,30 +336,35 @@ public class EvaluationService {
 		
 		// Loop through each word
 		for(int i = 0; i < words.length; i++) {
-			// Transform each word
-				// Vowel case
-				if(words[i].charAt(0) == 'a' || words[i].charAt(0) == 'e' || words[i].charAt(0) == 'i'
-						 || words[i].charAt(0) == 'o' || words[i].charAt(0) == 'u'){
-					// Add Transformed word to result
-					result += words[i] + "ay";
-					
+			String cluster = "";
+			
+			if(words[i].charAt(0) == 'a' || words[i].charAt(0) == 'e' || words[i].charAt(0) == 'i'
+					 || words[i].charAt(0) == 'o' || words[i].charAt(0) == 'u') {
+				result += words[i] + cluster + "ay";
+				if(i + 1 != words.length) {
+					result += " ";
 				}
-				if(words[i].charAt(0) == 'b' || words[i].charAt(0) == 'c' || words[i].charAt(0) == 'd'
-						 || words[i].charAt(0) == 'f' || words[i].charAt(0) == 'g' || words[i].charAt(0) == 'h'
-						 || words[i].charAt(0) == 'j' || words[i].charAt(0) == 'k' || words[i].charAt(0) == 'l'
-						 || words[i].charAt(0) == 'm' || words[i].charAt(0) == 'n' || words[i].charAt(0) == 'p'
-						 || words[i].charAt(0) == 'q' || words[i].charAt(0) == 'r' || words[i].charAt(0) == 's'
-						 || words[i].charAt(0) == 't' || words[i].charAt(0) == 'v' || words[i].charAt(0) == 'w'
-						 || words[i].charAt(0) == 'x' || words[i].charAt(0) == 'y' || words[i].charAt(0) == 'z') {
-					// Consonant case
-					// Add Transformed word to result
-				 result += words[i].substring(1) + words[i].charAt(0)+ "ay ";
-				}				
+			}
+			else if(words[i].charAt(0) == 'q'){
+				cluster += "qu";
+				result += words[i].substring(2) + cluster + "ay";
+				if(i + 1 != words.length) {
+					result += " ";
+				}
+			}
+			else
+			{
+				for(int j = 0; words[i].charAt(j) != 'a' && words[i].charAt(j) != 'e' && words[i].charAt(j) != 'i'
+					 && words[i].charAt(j) != 'o' && words[i].charAt(j) != 'u'; j++) {
+					cluster += words[i].charAt(j);
+				}
+				result += words[i].substring(cluster.length()) + cluster + "ay";
+				if(i + 1 != words.length) {
+					result += " ";
+				}
+			}
 		}
-		System.out.println(result);	
-		
-		
-		return null;
+		return result;
 	}
 
 	/**
@@ -385,7 +383,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
+//		int armstrong[] = new int[10]; // Max number of digits of the largest int is 10
+//		int digits = 0;
+//		System.out.println(input);
+//		for(int i = 0; input > 0; i++) {
+//			digits++;
+//			System.out.println(input % 10);
+//			armstrong[i] = input % 10;
+//			input /= 10;
+//		}
+//		
+//		for(int i = 0; i < armstrong.length; i++) {
+//			System.out.println(armstrong[i]);
+//		}
+//		System.out.println(digits + " digits");
+		
 		return false;
 	}
 
@@ -457,7 +469,7 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i) {
+	public int calculateNthPrime(int i) { // CalculateNthprime test is thrown out
 		// TODO Write an implementation for this method declaration
 		return 0;
 	}
@@ -580,7 +592,9 @@ public class EvaluationService {
 	 * @param given
 	 * @return
 	 */
-	public Temporal getGigasecondDate(Temporal given) {
+	public Temporal getGigasecondDate(Temporal given) { // Skip this question
+		System.out.println("Temporal");
+		
 		// TODO Write an implementation for this method declaration
 		return null;
 	}
