@@ -540,14 +540,9 @@ public class EvaluationService {
 					if(cipher.length() % 6 == 5) {
 						cipher += " ";
 					}
-					
-
-//				alphabet.indexOf(string.charAt(i));
-//				cipher +=  string.charAt(string.length() - 1);
 				}
 			}
-			System.out.println(cipher);
-			return cipher;
+			return cipher.trim();
 		}
 
 		/**
@@ -557,8 +552,35 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String decipher = "";
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			String numbers = "1234567890";
+			String cipherAlphabet = "zyxwvutsrqponmlkjihgfedcba";
+			
+			// Split cipher text removing an spaces
+			String[] cipher = string.split(" ");
+			
+			// Cycle through each word
+			for(int i = 0; i < cipher.length ;i++) {
+
+				// Cycle through each letter
+				for(int j = 0; j < cipher[i].length(); j++) {
+					// Letter case
+					if(alphabet.indexOf(cipher[i].charAt(j)) >= 0) {
+						// Find alphabet index of char
+						int index = alphabet.indexOf(cipher[i].charAt(j));
+						// Find cipher alphabet equivalent & add it to cipher
+						decipher += cipherAlphabet.charAt(index);
+						
+					}
+					
+					// Number case
+					if(numbers.indexOf(cipher[i].charAt(j)) >=0 ) {
+						decipher += cipher[i].charAt(j);
+					}
+				}
+			}
+			return decipher;
 		}
 	}
 
