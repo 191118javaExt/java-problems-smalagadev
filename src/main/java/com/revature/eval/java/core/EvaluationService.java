@@ -132,7 +132,7 @@ public class EvaluationService {
 		int score = 0;
 		
 		for(int i = 0; i < string.length(); i++) { //testALongMixCaseWord() not passed
-			switch(string.charAt(i)) {
+			switch(string.toLowerCase().charAt(i)) {
 				case 'A': case 'a':
 				case 'E': case 'e':
 				case 'I': case 'i':
@@ -172,7 +172,7 @@ public class EvaluationService {
 					
 				case 'J': case 'j':
 				case 'X': case 'x':
-					score += 5;
+					score += 8;
 					break;
 					
 				case 'Q': case 'q':
@@ -385,22 +385,21 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-//		int armstrong[] = new int[10]; // Max number of digits of the largest int is 10
-//		int digits = 0;
-//		System.out.println(input);
-//		for(int i = 0; input > 0; i++) {
-//			digits++;
-//			System.out.println(input % 10);
-//			armstrong[i] = input % 10;
-//			input /= 10;
-//		}
-//		
-//		for(int i = 0; i < armstrong.length; i++) {
-//			System.out.println(armstrong[i]);
-//		}
-//		System.out.println(digits + " digits");
+		int armstrong[] = new int[10]; // Max number of digits of the largest int is 10
+		int sum = 0;
+		int digits = 0;
+		int original = input; // Preserve input
+		for(int i = 0; input > 0; i++) {
+			digits++;
+			armstrong[i] = input % 10;
+			input /= 10;
+		}
 		
-		return false;
+		for(int x : armstrong) {
+			sum += Math.pow(x, digits);
+		}
+
+		return original == sum;
 	}
 
 	/**
@@ -522,7 +521,7 @@ public class EvaluationService {
 
 				// Cycle through each letter
 				for(int j = 0; j < words[i].length(); j++) {
-										// Letter case
+					// Letter case
 					if(alphabet.indexOf(words[i].charAt(j)) >= 0) {
 						// Find alphabet index of char
 						int index = alphabet.indexOf(words[i].charAt(j));
@@ -625,24 +624,24 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		char[] alphabet = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-		                   'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
-		                   'y','z'};
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		boolean matched = true;
 		
-		//Use .contains method for string
-		
-		// Loop through each letter of the alphabet
-//		for(int i = 0; i < alphabet.length; i++) {
-//			boolean matched = true;
+//		 Loop through each letter of the string
+		for(int i = 0; i < string.length() && matched; i++) {
 			
-			// Loop each letter of the alphabet, through each letter of the string
-//			for(int j = 0; matched || j < string.length(); j++) {
-//				System.out.println(string.charAt(j));
-//			}
-//			System.out.println(alphabet[i]);
-//		}
+//			 Loop each letter of the alphabet, through each letter of the string
+			for(int j = 0; i < alphabet.length() && matched; j++) {
+				if(string.charAt(i) == ' ') {
+					// Do nothing, skip space
+				}
+				else if(string.indexOf(alphabet.charAt(j)) < 0){
+					matched = false;
+				}
+			}
+		}
 		
-		return true;
+		return matched;
 	}
 
 	/**
@@ -674,6 +673,29 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
+		int arrSize = 0;
+		int sum = 0;
+		// Get array size
+		for(int multiple: set) {
+			
+			for(int j = multiple; j < i; j += multiple) {
+				arrSize++;
+			}
+		}
+		// Declare array that will host multiples to avoid repeats
+		int usedMultiples[] = new int[arrSize];
+		
+		// Fill array
+				for(int multiple: set) {
+					for(int j = multiple; j < i; j += multiple) {
+						// check for multiples
+						
+						// add to array
+					}
+				}
+		
+//		System.out.println(usedMultiples.length);
+		
 		// TODO Write an implementation for this method declaration
 		return 0;
 	}
@@ -794,5 +816,4 @@ public class EvaluationService {
 		}
 		return 0;
 	}
-
 }
