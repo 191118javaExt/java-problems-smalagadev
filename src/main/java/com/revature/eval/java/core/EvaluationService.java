@@ -337,7 +337,7 @@ public class EvaluationService {
 		// Loop through each word
 		for(int i = 0; i < words.length; i++) {
 			String cluster = "";
-			
+			// Vowel Case
 			if(words[i].charAt(0) == 'a' || words[i].charAt(0) == 'e' || words[i].charAt(0) == 'i'
 					 || words[i].charAt(0) == 'o' || words[i].charAt(0) == 'u') {
 				result += words[i] + cluster + "ay";
@@ -345,6 +345,7 @@ public class EvaluationService {
 					result += " ";
 				}
 			}
+			// Q case
 			else if(words[i].charAt(0) == 'q'){
 				cluster += "qu";
 				result += words[i].substring(2) + cluster + "ay";
@@ -352,6 +353,7 @@ public class EvaluationService {
 					result += " ";
 				}
 			}
+			// Consonant case
 			else
 			{
 				for(int j = 0; words[i].charAt(j) != 'a' && words[i].charAt(j) != 'e' && words[i].charAt(j) != 'i'
@@ -507,8 +509,45 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			String cipher = "";
+			String alphabet = "abcdefghijklmnopqrstuvwxyz";
+			String numbers = "1234567890";
+			String cipherAlphabet = "zyxwvutsrqponmlkjihgfedcba";
+			
+			// Break up phrases and remove uppercase letters
+			String[] words = string.toLowerCase().split(" ");
+			
+			// Cycle through each word
+			for(int i = 0; i < words.length ;i++) {
+
+				// Cycle through each letter
+				for(int j = 0; j < words[i].length(); j++) {
+										// Letter case
+					if(alphabet.indexOf(words[i].charAt(j)) >= 0) {
+						// Find alphabet index of char
+						int index = alphabet.indexOf(words[i].charAt(j));
+						// Find cipher alphabet equivalent & add it to cipher
+						cipher += cipherAlphabet.charAt(index);
+						
+					}
+					
+					// Number case
+					if(numbers.indexOf(words[i].charAt(j)) >=0 ) {
+						cipher += words[i].charAt(j);
+					}
+					
+					// Add space in between every five characters
+					if(cipher.length() % 6 == 5) {
+						cipher += " ";
+					}
+					
+
+//				alphabet.indexOf(string.charAt(i));
+//				cipher +=  string.charAt(string.length() - 1);
+				}
+			}
+			System.out.println(cipher);
+			return cipher;
 		}
 
 		/**
